@@ -1,0 +1,42 @@
+IF DB_ID('Rewards_System') IS NULL BEGIN CREATE DATABASE Rewards_System;
+END 
+GO
+
+USE Rewards_System;
+GO
+
+DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS MemberRewards;
+DROP TABLE IF EXISTS Members;
+DROP TABLE IF EXISTS RewardItems;
+
+CREATE TABLE Members (
+    PhoneNumber VARCHAR(20) PRIMARY KEY,
+    FirstName VARCHAR(25) NOT NULL,
+    LastName VARCHAR(25) NOT NULL,
+    Birthday DATE NOT NULL,
+    EmailAddress VARCHAR(40) NOT NULL
+);
+CREATE TABLE MemberRewards(
+    MemberID VARCHAR(20) PRIMARY KEY,
+    Points INT DEFAULT 0 NOT NULL,
+    ExpiryDate DATE DEFAULT GETDATE() NOT NULL,
+    CONSTRAINT FK_MR_MEMBERID FOREIGN KEY (MemberID) REFERENCES Members(PhoneNumber)
+);
+CREATE TABLE RewardItems(
+    RewardID INT IDENTITY PRIMARY KEY,
+    RewardName VARCHAR(40) NOT NULL,
+    RewardImage VARBINARY(MAX),
+    RewardPrice INT NOT NULL
+);
+CREATE TABLE Orders(
+    UniqueOrderID INT IDENTITY(100, 1) PRIMARY KEY,
+    MemberID VARCHAR(20) NOT NULL,
+    OrderID INT NOT NULL,
+    OrderDate DATE NOT NULL,
+    Total DECIMAL(10, 2) NOT NULL,
+    PointsAwarded INT NOT NULL,
+    PointsUsed INT NOT NULL,
+    CONSTRAINT FK_O_MEMBERID FOREIGN KEY (MemberID) REFERENCES Members(PhoneNumber)
+);
+
