@@ -30,9 +30,9 @@ CREATE TABLE RewardItems(
     RewardPrice INT NOT NULL
 );
 CREATE TABLE Orders(
-    UniqueOrderID INT IDENTITY(100, 1) PRIMARY KEY,
+    ID INT IDENTITY(100, 1) PRIMARY KEY,
     MemberID VARCHAR(20) NOT NULL,
-    OrderID INT NOT NULL,
+    LocalOrderID INT NOT NULL,
     OrderDate DATE NOT NULL,
     Total DECIMAL(10, 2) NOT NULL,
     PointsAwarded INT NOT NULL,
