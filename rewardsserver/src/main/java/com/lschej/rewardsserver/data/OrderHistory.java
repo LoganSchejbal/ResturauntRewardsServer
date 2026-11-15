@@ -53,7 +53,7 @@ public class OrderHistory {
         if (orders.isEmpty()) {
             return LocalDate.now().plusDays(1);
         }
-        return orders.get(0).getOrderDate().plusDays(DataController.settings.getPointsLifespan());
+        return orders.get(0).getOrderDate().plusDays(180); //Temp
     }
 
     public int getOrderCount() {

@@ -62,6 +62,8 @@ public class MemberRepository {
                         resultSet.getString("EmailAddress")
                 );
 
+                logger.info("Member %s retrieved.".formatted(phoneNumber));
+
                 return Optional.of(member);
             }
         } catch (SQLException e) {
@@ -90,6 +92,8 @@ public class MemberRepository {
 
             statement.executeUpdate();
 
+            logger.info("Member %s updated.".formatted(member.getPhoneNumber()));
+
         } catch (SQLException e) {
             String message = "SQL Exception: " + e + " Member Update Dump: %s, %s, %s, %s, %s";
             logger.warning(message.formatted(member.getPhoneNumber(), member.getFirstName(), member.getLastName(), member.getBirthday(), member.getEmailAddress()));
@@ -99,7 +103,7 @@ public class MemberRepository {
     public void delete(String phoneNumber) {
         String sql = """
             DELETE FROM Members
-            WHERE ?;
+            WHERE PhoneNumber = ?
         """;
 
         try (Connection connection = DatabaseController.getConnection(); PreparedStatement statement = connection.prepareStatement(sql);) {
@@ -107,6 +111,8 @@ public class MemberRepository {
             statement.setString(1, phoneNumber);
 
             statement.executeUpdate();
+
+            logger.info("Member %s deleted.".formatted(phoneNumber));
 
         } catch (Exception e) {
             String message = "SQL Exception: " + e + " Remove Phone Number: " + phoneNumber;

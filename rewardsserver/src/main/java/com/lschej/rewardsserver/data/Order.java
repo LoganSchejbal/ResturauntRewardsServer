@@ -10,11 +10,11 @@ public class Order {
     private int pointsAwarded;
     private int pointsUsed;
 
-    public Order(int orderNumber, LocalDate orderDate, double orderTotal, DataController dataController) {
+    public Order(int orderNumber, LocalDate orderDate, double orderTotal) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.orderTotal = orderTotal;
-        pointsAwarded = (int) (orderTotal * dataController.settings.getPointsToTotalRatio());
+        pointsAwarded = (int) orderTotal * 10; //Temp
     }
 
     public int getOrderNumber() {
