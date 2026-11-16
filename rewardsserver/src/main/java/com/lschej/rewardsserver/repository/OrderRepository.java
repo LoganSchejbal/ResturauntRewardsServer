@@ -110,20 +110,24 @@ public class OrderRepository {
         }
     }
 
-    public void update(int uniqueId) {
+    public void update(Order order, int uniqueId) {
         String sql = """
             UPDATE Orders
-            SET MemberID,
-                LocalOrderID,
-                OrderDate,
-                Total,
-                PointsAwarded,
-                PointsUsed
+            SET LocalOrderID = ?,
+                OrderDate = ?,
+                Total = ?,
+                PointsAwarded = ?,
+                PointsUsed = ?
             WHERE ID = ?
         """;
 
         try (Connection connection = DatabaseController.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, uniqueId);
+            statement.setInt(1, order.getOrderNumber());
+            statement.setObject(2, order.getOrderDate());
+            statement.setBigDecimal(3, order.getOrderTotal());
+            statement.setInt(4, order.getPointsAwarded());
+            statement.setInt(5, order.getPointsUsed());
+            statement.setInt(6, uniqueId);
 
             statement.executeUpdate();
 
