@@ -47,4 +47,12 @@ public class Order {
         this.pointsUsed += pointsUsed;
         return -(this.pointsAwarded - this.pointsUsed);
     }
+
+    public int getPointsAwarded() {
+        return pointsAwarded;
+    }
+
+    public int getPointsUsed() {
+        return pointsUsed;
+    }
 }
