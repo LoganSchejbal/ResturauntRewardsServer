@@ -10,7 +10,7 @@ public class Member {
     private LocalDate birthday;
     private String emailAddress;
     private OrderHistory orderHistory;
-    private MemberRewards rewards;
+    private int points;
 
     public Member(String number, String fName, String lName, String birthday, String email) {
         PhoneNumber = number;
@@ -77,15 +77,16 @@ public class Member {
     }
 
     private void certifyRewards() {
-        while (rewards.isExpired()) {
-            if (orderHistory.getOrderCount() == 0) {
-                rewards.updatePoints(0, LocalDate.now().plusDays(1));
-                break;
-            }
-            orderHistory.removeOldest();
-            rewards.updatePoints(orderHistory.collectPoints(), orderHistory.getOldesDate());
-        }
-        rewards.updatePoints(orderHistory.collectPoints(), orderHistory.getOldesDate());
+        // Need to refactor this method
+        // while (rewards.isExpired()) {
+        //     if (orderHistory.getOrderCount() == 0) {
+        //         rewards.updatePoints(0, LocalDate.now().plusDays(1));
+        //         break;
+        //     }
+        //     orderHistory.removeOldest();
+        //     rewards.updatePoints(orderHistory.collectPoints(), orderHistory.getOldesDate());
+        // }
+        // rewards.updatePoints(orderHistory.collectPoints(), orderHistory.getOldesDate());
     }
 
     public void addOrder(Order order) {
@@ -95,7 +96,7 @@ public class Member {
 
     public int getPoints() {
         certifyRewards();
-        return rewards.getPointsTotal();
+        return points;
     }
 
     public OrderHistory getOrderHistory() {
@@ -104,15 +105,15 @@ public class Member {
 
     public boolean hasSufficientBalance(int pointsToRedeem) {
         certifyRewards();
-        return (rewards.getPointsTotal() - pointsToRedeem) >= 0;
+        return (points - pointsToRedeem) >= 0;
     }
 
     public void redeemPoints(int points) {
         if (hasSufficientBalance(points)) {
             orderHistory.redeemPoints(points);
-            rewards.updatePoints(orderHistory.collectPoints(), orderHistory.getOldesDate());
+            points = orderHistory.collectPoints();
         } else {
-            throw new InsufficientBalanceError("B: " + rewards.getPointsTotal() + ", P: " + points);
+            throw new InsufficientBalanceError("B: " + points + ", P: " + points);
         }
     }
 }
