@@ -1,20 +1,30 @@
 package com.lschej.rewardsserver.data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Order {
 
+    private int id;
     private int orderNumber;
     private LocalDate orderDate;
-    private double orderTotal;
+    private BigDecimal orderTotal;
     private int pointsAwarded;
     private int pointsUsed;
 
-    public Order(int orderNumber, LocalDate orderDate, double orderTotal) {
+    public Order(int orderNumber, LocalDate orderDate, BigDecimal orderTotal) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.orderTotal = orderTotal;
-        pointsAwarded = (int) orderTotal * 10; //Temp
+        pointsAwarded = orderTotal.multiply(BigDecimal.TEN).intValue(); //Temp
+    }
+
+    public Order(int id, int orderNumber, LocalDate orderDate, BigDecimal orderTotal, int pointsAwarded, int pointsUsed) {
+        this.orderNumber = orderNumber;
+        this.orderDate = orderDate;
+        this.orderTotal = orderTotal;
+        this.pointsAwarded = pointsAwarded;
+        this.pointsUsed = pointsUsed;
     }
 
     public int getOrderNumber() {
@@ -25,7 +35,7 @@ public class Order {
         return orderDate;
     }
 
-    public double getOrderTotal() {
+    public BigDecimal getOrderTotal() {
         return orderTotal;
     }
 

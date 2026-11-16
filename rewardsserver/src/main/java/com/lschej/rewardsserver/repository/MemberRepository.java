@@ -53,7 +53,6 @@ public class MemberRepository {
                     return Optional.empty();
                 }
 
-                LocalDate birthday = resultSet.getObject("Birthday", LocalDate.class);
                 Member member = new Member(
                         resultSet.getString("PhoneNumber"),
                         resultSet.getString("FirstName"),
