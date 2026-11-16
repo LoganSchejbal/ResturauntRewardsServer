@@ -4,7 +4,8 @@ import javax.swing.ImageIcon;
 
 public class RewardItem {
 
-    public static final ImageIcon DEFAULT_IMAGE = new ImageIcon(RewardItem.class.getResource("/rewards/lschej/data/1077596-200.png"));
+    private static final ImageIcon DEFAULT_IMAGE = new ImageIcon(RewardItem.class.getResource("/rewards/lschej/data/1077596-200.png"));
+    private int id;
     private ImageIcon image;
     private String name;
     private int price;
@@ -21,6 +22,13 @@ public class RewardItem {
         } else {
             image = null;
         }
+        this.name = name;
+        this.price = price;
+    }
+
+    public RewardItem(int id, ImageIcon image, String name, int price) {
+        this.id = id;
+        this.image = image;
         this.name = name;
         this.price = price;
     }
@@ -57,6 +65,14 @@ public class RewardItem {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
