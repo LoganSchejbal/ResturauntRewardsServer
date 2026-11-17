@@ -19,7 +19,7 @@
             <artifactId>mssql-jdbc</artifactId>
             <version>13.6.2.jre11</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
@@ -33,7 +33,7 @@
         </dependency>
 
         <dependency>
-            <groupId>io.javalin</groupId>
+            <groupId>io.javalin.community.ssl</groupId>
             <artifactId>javalin-ssl</artifactId>
             <version>7.2.4</version>
         </dependency>
