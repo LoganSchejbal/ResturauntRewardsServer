@@ -5,7 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 public class DatabaseController {
+
+    private static final HikariDataSource source = new HikariDataSource(configDataSource());
+
+    private DatabaseController() {
+    }
 
     private static String getUrl() {
         return enviromentVariable("DB_URL");
@@ -29,6 +37,19 @@ public class DatabaseController {
         return variable;
     }
 
+    public static HikariConfig configDataSource() {
+        HikariConfig config = new HikariConfig();
+
+        config.setJdbcUrl(getUrl());
+        config.setUsername(getUser());
+        config.setPassword(getPassword());
+        config.setMaximumPoolSize(10);
+        config.setMinimumIdle(2);
+        config.setPoolName("Rewards_Server");
+
+        return config;
+    }
+
     public static Connection getConnection() throws SQLException {
         Properties properties = new Properties();
         properties.setProperty("user", getUser());
@@ -36,5 +57,11 @@ public class DatabaseController {
 
         return DriverManager.getConnection(getUrl(), properties);
 
+    }
+
+    public static void closePool() {
+        if (!source.isClosed()) {
+            source.close();
+        }
     }
 }
